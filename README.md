@@ -12,7 +12,7 @@ npm install gulp-pgsql --save-dev
 
 Use something like below to apply your scripts to database:
 
-```
+```javascript
 const pgsql = require('gulp-pgsql');
 
 gulp.task('pgsql', function(done) {
@@ -27,7 +27,7 @@ gulp.task('pgsql', function(done) {
 
 And something like this to watch changes and automatically apply it:
 
-```
+```javascript
 gulp.task('watch:pgsql', ['pgsql'], function() {
   gulp.watch(['db/**/*.pgsql'])
     .on('change', function(file) {
