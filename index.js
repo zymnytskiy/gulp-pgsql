@@ -72,11 +72,19 @@ module.exports = function(uri) {
 };
 
 module.exports.log = function(err) {
-  gutil.log(gutil.colors.yellow('[pgsql]'), 'Error at ', err.file);
-  gutil.log(gutil.colors.yellow('[pgsql]'), err.severity + ': ', err.message);
+  if (err.file) {
+    gutil.log(gutil.colors.yellow('[pgsql]'), 'Error at ', err.file);
+  }
+
+  if (err.severity) {
+    gutil.log(gutil.colors.yellow('[pgsql]'), err.severity + ': ', err.message);
+  } else {
+    gutil.log(gutil.colors.yellow('[pgsql]'), err.message);
+  }
+
   if (err.where) {
     gutil.log(gutil.colors.yellow('[pgsql]'), 'CONTEXT: ', err.where);
-  } else {
+  } else if (err.line && err.line.num) {
     const info = 'LINE ' + err.line.num + ':';
     gutil.log(gutil.colors.yellow('[pgsql]'), info, err.line.line);
     const spaces = (n) => Array.from({ length: n }, () => ' ').join('');
